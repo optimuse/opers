@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="false">
+
+    <!--&lt;!&ndash; 数据源配置,使用应用内的C3P0数据库连接池 &ndash;&gt; -->
+    <!-- 动态数据源 -->
+    <bean id="dataSource" class="com.bestpay.ecurrency.operations.dal.config.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="pcpf" value-ref="dataSourceForPcpf" />
+                <entry key="tyvc" value-ref="dataSourceForTyvc" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSourceForPcpf" />
+    </bean>
+
+    <!-- 数据源1 pcpf-->
+    <bean id="dataSourceForPcpf" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.pcpf.driverClassName}" />
+        <property name="url" value="${jdbc.pcpf.jdbcUrl}" />
+        <property name="username" value="${jdbc.pcpf.jdbcUsername}" />
+        <property name="password" value="${jdbc.pcpf.jdbcPassword}" />
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <property name="minIdle" value="${jdbc.minIdle}" />
+        <property name="maxIdle" value="${jdbc.maxIdle}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <property name="maxWait" value="${jdbc.maxWait}" />
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+        <property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+        <property name="validationQuery" value="select 1 from dual"/>
+    </bean>
+
+    <!-- 数据源2 tyvc -->
+    <bean id="dataSourceForTyvc" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.tyvc.driverClassName}" />
+        <property name="url" value="${jdbc.tyvc.jdbcUrl}" />
+        <property name="username" value="${jdbc.tyvc.jdbcUsername}" />
+        <property name="password" value="${jdbc.tyvc.jdbcPassword}" />
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <property name="minIdle" value="${jdbc.minIdle}" />
+        <property name="maxIdle" value="${jdbc.maxIdle}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <property name="maxWait" value="${jdbc.maxWait}" />
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+        <property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+        <property name="validationQuery" value="select 1 from dual"/>
+    </bean>
+
+
+
+</beans>

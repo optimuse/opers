@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestpay.ecurrency.operations.dal.mapper.IXxlJobGroupMapper">
+	
+	<resultMap id="XxlJobGroup" type="com.bestpay.ecurrency.operations.dal.model.XxlJobGroupDO" >
+		<result column="id" property="id" jdbcType="DECIMAL" />
+	    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+	    <result column="title" property="title" jdbcType="VARCHAR" />
+	    <result column="order_number" property="order" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.app_name,
+		t.title,
+		t.order_number
+	</sql>
+
+	<select id="findAll" parameterType="java.lang.Integer" resultMap="XxlJobGroup">
+		SELECT <include refid="Base_Column_List" />
+		FROM T_QRTZ_TRIGGER_GROUP t
+		ORDER BY t.order_number ASC
+	</select>
+
+	<insert id="save" parameterType="com.bestpay.ecurrency.operations.dal.model.XxlJobGroupDO" >
+		INSERT INTO
+			T_QRTZ_TRIGGER_GROUP
+				(id,
+				app_name,
+				 title,
+				 order_number)
+		values (
+			SEQ_QRTZ_TRIGGER.nextval,
+		 	#{appName,jdbcType=VARCHAR},
+		 	#{title,jdbcType=VARCHAR},
+		 	#{order,jdbcType=DECIMAL})
+	</insert>
+
+	<update id="update" parameterType="com.bestpay.ecurrency.operations.dal.model.XxlJobGroupDO" >
+		UPDATE T_QRTZ_TRIGGER_GROUP
+		SET app_name = #{appName,jdbcType=VARCHAR},
+		     title = #{title,jdbcType=VARCHAR},
+			 order_number = #{order,jdbcType=DECIMAL}
+		WHERE id = #{id,jdbcType=DECIMAL}
+	</update>
+
+	<delete id="remove" parameterType="java.lang.Integer" >
+		DELETE FROM T_QRTZ_TRIGGER_GROUP
+		WHERE id = #{id}
+	</delete>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlJobGroup">
+		SELECT <include refid="Base_Column_List" />
+		FROM T_QRTZ_TRIGGER_GROUP t
+		WHERE t.id = #{id}
+	</select>
+
+</mapper>

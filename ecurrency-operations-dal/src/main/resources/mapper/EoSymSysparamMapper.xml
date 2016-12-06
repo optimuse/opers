@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestpay.ecurrency.operations.dal.mapper.EoSymSysparamMapper">
+  <resultMap id="BaseResultMap" type="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDO">
+    <id column="PARAM_CODE" jdbcType="VARCHAR" property="paramCode" />
+    <result column="PARAM_NAME" jdbcType="VARCHAR" property="paramName" />
+    <result column="PARAM_VAL" jdbcType="VARCHAR" property="paramVal" />
+    <result column="PARAM_DESC" jdbcType="VARCHAR" property="paramDesc" />
+    <result column="STAT" jdbcType="CHAR" property="stat" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PARAM_CODE, PARAM_NAME, PARAM_VAL, PARAM_DESC, STAT
+  </sql>
+  <select id="selectByExample" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EO_SYM_SYSPARAM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_EO_SYM_SYSPARAM
+    where PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDO">
+    insert into T_EO_SYM_SYSPARAM (PARAM_CODE, PARAM_NAME, PARAM_VAL, 
+      PARAM_DESC, STAT)
+    values (#{paramCode,jdbcType=VARCHAR}, #{paramName,jdbcType=VARCHAR}, #{paramVal,jdbcType=VARCHAR}, 
+      #{paramDesc,jdbcType=VARCHAR}, #{stat,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDO">
+    insert into T_EO_SYM_SYSPARAM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paramCode != null">
+        PARAM_CODE,
+      </if>
+      <if test="paramName != null">
+        PARAM_NAME,
+      </if>
+      <if test="paramVal != null">
+        PARAM_VAL,
+      </if>
+      <if test="paramDesc != null">
+        PARAM_DESC,
+      </if>
+      <if test="stat != null">
+        STAT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paramCode != null">
+        #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null">
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramVal != null">
+        #{paramVal,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null">
+        #{paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDOExample" resultType="java.lang.Long">
+    select count(*) from T_EO_SYM_SYSPARAM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_EO_SYM_SYSPARAM
+    <set>
+      <if test="record.paramCode != null">
+        PARAM_CODE = #{record.paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramName != null">
+        PARAM_NAME = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramVal != null">
+        PARAM_VAL = #{record.paramVal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramDesc != null">
+        PARAM_DESC = #{record.paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stat != null">
+        STAT = #{record.stat,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_EO_SYM_SYSPARAM
+    set PARAM_CODE = #{record.paramCode,jdbcType=VARCHAR},
+      PARAM_NAME = #{record.paramName,jdbcType=VARCHAR},
+      PARAM_VAL = #{record.paramVal,jdbcType=VARCHAR},
+      PARAM_DESC = #{record.paramDesc,jdbcType=VARCHAR},
+      STAT = #{record.stat,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDO">
+    update T_EO_SYM_SYSPARAM
+    <set>
+      <if test="paramName != null">
+        PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramVal != null">
+        PARAM_VAL = #{paramVal,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null">
+        PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        STAT = #{stat,jdbcType=CHAR},
+      </if>
+    </set>
+    where PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymSysparamDO">
+    update T_EO_SYM_SYSPARAM
+    set PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      PARAM_VAL = #{paramVal,jdbcType=VARCHAR},
+      PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      STAT = #{stat,jdbcType=CHAR}
+    where PARAM_CODE = #{paramCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

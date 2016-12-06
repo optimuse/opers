@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestpay.ecurrency.operations.dal.mapper.EoSymStaffMapper">
+  <resultMap id="BaseResultMap" type="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDO">
+    <id column="STAFF_ID" jdbcType="VARCHAR" property="staffId" />
+    <result column="STAFF_CODE" jdbcType="VARCHAR" property="staffCode" />
+    <result column="STAFF_NAME" jdbcType="VARCHAR" property="staffName" />
+    <result column="ORG_ID" jdbcType="DECIMAL" property="orgId" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="PHOTO" jdbcType="VARCHAR" property="photo" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="ZIP" jdbcType="VARCHAR" property="zip" />
+    <result column="CERT_TYPE" jdbcType="VARCHAR" property="certType" />
+    <result column="CERT_NBR" jdbcType="VARCHAR" property="certNbr" />
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate" />
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="PWD_STAT" jdbcType="CHAR" property="pwdStat" />
+    <result column="PWD_CTRL" jdbcType="CHAR" property="pwdCtrl" />
+    <result column="PWD_NEWTIME" jdbcType="TIMESTAMP" property="pwdNewtime" />
+    <result column="PWD_VALIDDAY" jdbcType="DECIMAL" property="pwdValidday" />
+    <result column="PWD_ERRTIMES" jdbcType="DECIMAL" property="pwdErrtimes" />
+    <result column="PWD_TRYTIMES" jdbcType="DECIMAL" property="pwdTrytimes" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="STAT" jdbcType="CHAR" property="stat" />
+    <result column="ERR_TIME_CURSOR" jdbcType="TIMESTAMP" property="errTimeCursor" />
+    <result column="PWD_CHANGE1" jdbcType="VARCHAR" property="pwdChange1" />
+    <result column="PWD_CHANGE2" jdbcType="VARCHAR" property="pwdChange2" />
+    <result column="PWD_CHANGE3" jdbcType="VARCHAR" property="pwdChange3" />
+    <result column="PWD_CHANGE4" jdbcType="VARCHAR" property="pwdChange4" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    STAFF_ID, STAFF_CODE, STAFF_NAME, ORG_ID, SEX, PHOTO, EMAIL, MOBILE, PHONE, ADDRESS, 
+    ZIP, CERT_TYPE, CERT_NBR, EFF_DATE, EXP_DATE, PASSWORD, PWD_STAT, PWD_CTRL, PWD_NEWTIME, 
+    PWD_VALIDDAY, PWD_ERRTIMES, PWD_TRYTIMES, MEMO, STAT, ERR_TIME_CURSOR, PWD_CHANGE1, 
+    PWD_CHANGE2, PWD_CHANGE3, PWD_CHANGE4
+  </sql>
+  <select id="selectByExample" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EO_SYM_STAFF
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_EO_SYM_STAFF
+    where STAFF_ID = #{staffId,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDO">
+    insert into T_EO_SYM_STAFF (STAFF_ID, STAFF_CODE, STAFF_NAME, 
+      ORG_ID, SEX, PHOTO, 
+      EMAIL, MOBILE, PHONE, 
+      ADDRESS, ZIP, CERT_TYPE, 
+      CERT_NBR, EFF_DATE, EXP_DATE, 
+      PASSWORD, PWD_STAT, PWD_CTRL, 
+      PWD_NEWTIME, PWD_VALIDDAY, PWD_ERRTIMES, 
+      PWD_TRYTIMES, MEMO, STAT, 
+      ERR_TIME_CURSOR, PWD_CHANGE1, PWD_CHANGE2, 
+      PWD_CHANGE3, PWD_CHANGE4)
+    values (#{staffId,jdbcType=VARCHAR}, #{staffCode,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=DECIMAL}, #{sex,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{zip,jdbcType=VARCHAR}, #{certType,jdbcType=VARCHAR}, 
+      #{certNbr,jdbcType=VARCHAR}, #{effDate,jdbcType=TIMESTAMP}, #{expDate,jdbcType=TIMESTAMP}, 
+      #{password,jdbcType=VARCHAR}, #{pwdStat,jdbcType=CHAR}, #{pwdCtrl,jdbcType=CHAR}, 
+      #{pwdNewtime,jdbcType=TIMESTAMP}, #{pwdValidday,jdbcType=DECIMAL}, #{pwdErrtimes,jdbcType=DECIMAL}, 
+      #{pwdTrytimes,jdbcType=DECIMAL}, #{memo,jdbcType=VARCHAR}, #{stat,jdbcType=CHAR}, 
+      #{errTimeCursor,jdbcType=TIMESTAMP}, #{pwdChange1,jdbcType=VARCHAR}, #{pwdChange2,jdbcType=VARCHAR}, 
+      #{pwdChange3,jdbcType=VARCHAR}, #{pwdChange4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDO">
+    insert into T_EO_SYM_STAFF
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="staffId != null">
+        STAFF_ID,
+      </if>
+      <if test="staffCode != null">
+        STAFF_CODE,
+      </if>
+      <if test="staffName != null">
+        STAFF_NAME,
+      </if>
+      <if test="orgId != null">
+        ORG_ID,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="photo != null">
+        PHOTO,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="address != null">
+        ADDRESS,
+      </if>
+      <if test="zip != null">
+        ZIP,
+      </if>
+      <if test="certType != null">
+        CERT_TYPE,
+      </if>
+      <if test="certNbr != null">
+        CERT_NBR,
+      </if>
+      <if test="effDate != null">
+        EFF_DATE,
+      </if>
+      <if test="expDate != null">
+        EXP_DATE,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="pwdStat != null">
+        PWD_STAT,
+      </if>
+      <if test="pwdCtrl != null">
+        PWD_CTRL,
+      </if>
+      <if test="pwdNewtime != null">
+        PWD_NEWTIME,
+      </if>
+      <if test="pwdValidday != null">
+        PWD_VALIDDAY,
+      </if>
+      <if test="pwdErrtimes != null">
+        PWD_ERRTIMES,
+      </if>
+      <if test="pwdTrytimes != null">
+        PWD_TRYTIMES,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="stat != null">
+        STAT,
+      </if>
+      <if test="errTimeCursor != null">
+        ERR_TIME_CURSOR,
+      </if>
+      <if test="pwdChange1 != null">
+        PWD_CHANGE1,
+      </if>
+      <if test="pwdChange2 != null">
+        PWD_CHANGE2,
+      </if>
+      <if test="pwdChange3 != null">
+        PWD_CHANGE3,
+      </if>
+      <if test="pwdChange4 != null">
+        PWD_CHANGE4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="staffId != null">
+        #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffCode != null">
+        #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null">
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null">
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+        #{certType,jdbcType=VARCHAR},
+      </if>
+      <if test="certNbr != null">
+        #{certNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+        #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+        #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdStat != null">
+        #{pwdStat,jdbcType=CHAR},
+      </if>
+      <if test="pwdCtrl != null">
+        #{pwdCtrl,jdbcType=CHAR},
+      </if>
+      <if test="pwdNewtime != null">
+        #{pwdNewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdValidday != null">
+        #{pwdValidday,jdbcType=DECIMAL},
+      </if>
+      <if test="pwdErrtimes != null">
+        #{pwdErrtimes,jdbcType=DECIMAL},
+      </if>
+      <if test="pwdTrytimes != null">
+        #{pwdTrytimes,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=CHAR},
+      </if>
+      <if test="errTimeCursor != null">
+        #{errTimeCursor,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdChange1 != null">
+        #{pwdChange1,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdChange2 != null">
+        #{pwdChange2,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdChange3 != null">
+        #{pwdChange3,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdChange4 != null">
+        #{pwdChange4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDOExample" resultType="java.lang.Long">
+    select count(*) from T_EO_SYM_STAFF
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_EO_SYM_STAFF
+    <set>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffCode != null">
+        STAFF_CODE = #{record.staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffName != null">
+        STAFF_NAME = #{record.staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sex != null">
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo != null">
+        PHOTO = #{record.photo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zip != null">
+        ZIP = #{record.zip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certType != null">
+        CERT_TYPE = #{record.certType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certNbr != null">
+        CERT_NBR = #{record.certNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.password != null">
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwdStat != null">
+        PWD_STAT = #{record.pwdStat,jdbcType=CHAR},
+      </if>
+      <if test="record.pwdCtrl != null">
+        PWD_CTRL = #{record.pwdCtrl,jdbcType=CHAR},
+      </if>
+      <if test="record.pwdNewtime != null">
+        PWD_NEWTIME = #{record.pwdNewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pwdValidday != null">
+        PWD_VALIDDAY = #{record.pwdValidday,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pwdErrtimes != null">
+        PWD_ERRTIMES = #{record.pwdErrtimes,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pwdTrytimes != null">
+        PWD_TRYTIMES = #{record.pwdTrytimes,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memo != null">
+        MEMO = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stat != null">
+        STAT = #{record.stat,jdbcType=CHAR},
+      </if>
+      <if test="record.errTimeCursor != null">
+        ERR_TIME_CURSOR = #{record.errTimeCursor,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pwdChange1 != null">
+        PWD_CHANGE1 = #{record.pwdChange1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwdChange2 != null">
+        PWD_CHANGE2 = #{record.pwdChange2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwdChange3 != null">
+        PWD_CHANGE3 = #{record.pwdChange3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwdChange4 != null">
+        PWD_CHANGE4 = #{record.pwdChange4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_EO_SYM_STAFF
+    set STAFF_ID = #{record.staffId,jdbcType=VARCHAR},
+      STAFF_CODE = #{record.staffCode,jdbcType=VARCHAR},
+      STAFF_NAME = #{record.staffName,jdbcType=VARCHAR},
+      ORG_ID = #{record.orgId,jdbcType=DECIMAL},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      PHOTO = #{record.photo,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      ZIP = #{record.zip,jdbcType=VARCHAR},
+      CERT_TYPE = #{record.certType,jdbcType=VARCHAR},
+      CERT_NBR = #{record.certNbr,jdbcType=VARCHAR},
+      EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      PWD_STAT = #{record.pwdStat,jdbcType=CHAR},
+      PWD_CTRL = #{record.pwdCtrl,jdbcType=CHAR},
+      PWD_NEWTIME = #{record.pwdNewtime,jdbcType=TIMESTAMP},
+      PWD_VALIDDAY = #{record.pwdValidday,jdbcType=DECIMAL},
+      PWD_ERRTIMES = #{record.pwdErrtimes,jdbcType=DECIMAL},
+      PWD_TRYTIMES = #{record.pwdTrytimes,jdbcType=DECIMAL},
+      MEMO = #{record.memo,jdbcType=VARCHAR},
+      STAT = #{record.stat,jdbcType=CHAR},
+      ERR_TIME_CURSOR = #{record.errTimeCursor,jdbcType=TIMESTAMP},
+      PWD_CHANGE1 = #{record.pwdChange1,jdbcType=VARCHAR},
+      PWD_CHANGE2 = #{record.pwdChange2,jdbcType=VARCHAR},
+      PWD_CHANGE3 = #{record.pwdChange3,jdbcType=VARCHAR},
+      PWD_CHANGE4 = #{record.pwdChange4,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDO">
+    update T_EO_SYM_STAFF
+    <set>
+      <if test="staffCode != null">
+        STAFF_CODE = #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        STAFF_NAME = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        ORG_ID = #{orgId,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null">
+        PHOTO = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null">
+        ZIP = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+        CERT_TYPE = #{certType,jdbcType=VARCHAR},
+      </if>
+      <if test="certNbr != null">
+        CERT_NBR = #{certNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+        EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+        EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdStat != null">
+        PWD_STAT = #{pwdStat,jdbcType=CHAR},
+      </if>
+      <if test="pwdCtrl != null">
+        PWD_CTRL = #{pwdCtrl,jdbcType=CHAR},
+      </if>
+      <if test="pwdNewtime != null">
+        PWD_NEWTIME = #{pwdNewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdValidday != null">
+        PWD_VALIDDAY = #{pwdValidday,jdbcType=DECIMAL},
+      </if>
+      <if test="pwdErrtimes != null">
+        PWD_ERRTIMES = #{pwdErrtimes,jdbcType=DECIMAL},
+      </if>
+      <if test="pwdTrytimes != null">
+        PWD_TRYTIMES = #{pwdTrytimes,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        STAT = #{stat,jdbcType=CHAR},
+      </if>
+      <if test="errTimeCursor != null">
+        ERR_TIME_CURSOR = #{errTimeCursor,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdChange1 != null">
+        PWD_CHANGE1 = #{pwdChange1,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdChange2 != null">
+        PWD_CHANGE2 = #{pwdChange2,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdChange3 != null">
+        PWD_CHANGE3 = #{pwdChange3,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdChange4 != null">
+        PWD_CHANGE4 = #{pwdChange4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STAFF_ID = #{staffId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymStaffDO">
+    update T_EO_SYM_STAFF
+    set STAFF_CODE = #{staffCode,jdbcType=VARCHAR},
+      STAFF_NAME = #{staffName,jdbcType=VARCHAR},
+      ORG_ID = #{orgId,jdbcType=DECIMAL},
+      SEX = #{sex,jdbcType=VARCHAR},
+      PHOTO = #{photo,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      ZIP = #{zip,jdbcType=VARCHAR},
+      CERT_TYPE = #{certType,jdbcType=VARCHAR},
+      CERT_NBR = #{certNbr,jdbcType=VARCHAR},
+      EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      PWD_STAT = #{pwdStat,jdbcType=CHAR},
+      PWD_CTRL = #{pwdCtrl,jdbcType=CHAR},
+      PWD_NEWTIME = #{pwdNewtime,jdbcType=TIMESTAMP},
+      PWD_VALIDDAY = #{pwdValidday,jdbcType=DECIMAL},
+      PWD_ERRTIMES = #{pwdErrtimes,jdbcType=DECIMAL},
+      PWD_TRYTIMES = #{pwdTrytimes,jdbcType=DECIMAL},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      STAT = #{stat,jdbcType=CHAR},
+      ERR_TIME_CURSOR = #{errTimeCursor,jdbcType=TIMESTAMP},
+      PWD_CHANGE1 = #{pwdChange1,jdbcType=VARCHAR},
+      PWD_CHANGE2 = #{pwdChange2,jdbcType=VARCHAR},
+      PWD_CHANGE3 = #{pwdChange3,jdbcType=VARCHAR},
+      PWD_CHANGE4 = #{pwdChange4,jdbcType=VARCHAR}
+    where STAFF_ID = #{staffId,jdbcType=VARCHAR}
+  </update>
+</mapper>

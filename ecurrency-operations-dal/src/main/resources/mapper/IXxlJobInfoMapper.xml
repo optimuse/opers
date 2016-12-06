@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestpay.ecurrency.operations.dal.mapper.IXxlJobInfoMapper">
+
+    <resultMap id="XxlJobInfo" type="com.bestpay.ecurrency.operations.dal.model.XxlJobInfoDO">
+        <result column="id" property="id" jdbcType="DECIMAL"/>
+        <result column="job_group" property="jobGroup" jdbcType="DECIMAL"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="job_cron" property="jobCron" jdbcType="VARCHAR"/>
+        <result column="job_desc" property="jobDesc" jdbcType="VARCHAR"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="alarm_email" property="alarmEmail" jdbcType="VARCHAR"/>
+        <result column="executor_handler" property="executorHandler" jdbcType="VARCHAR"/>
+        <result column="executor_param" property="executorParam" jdbcType="VARCHAR"/>
+        <result column="glue_switch" property="glueSwitch" jdbcType="DECIMAL"/>
+        <result column="glue_source" property="glueSource" jdbcType="VARCHAR"/>
+        <result column="glue_remark" property="glueRemark" jdbcType="VARCHAR"/>
+        <result column="child_jobkey" property="childJobKey" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		t.id,
+		t.job_group,
+		t.job_name,
+		t.job_cron,
+		t.job_desc,
+		t.add_time,
+		t.update_time,
+		t.author,
+		t.alarm_email,
+		t.executor_handler,
+		t.executor_param,
+		t.glue_switch,
+		t.glue_source,
+		t.glue_remark,
+		t.child_jobkey
+	</sql>
+
+    <select id="pageList" parameterType="java.util.HashMap" resultMap="XxlJobInfo">
+        select *
+        from (select b.*, rownum as rn
+        from (SELECT
+        <include refid="Base_Column_List"/>
+        FROM T_QRTZ_TRIGGER_INFO t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="jobGroup gt 0">
+                AND t.job_group = #{jobGroup}
+            </if>
+            <if test="executorHandler != null and executorHandler != ''">
+                AND t.executor_handler like CONCAT(CONCAT('%', #{executorHandler}), '%')
+            </if>
+        </trim>
+        ORDER BY id DESC) b) c
+        where c.rn <![CDATA[ > ]]> #{offset} and c.rn <![CDATA[ <= ]]> #{pagesize}+#{offset}
+    </select>
+
+    <select id="pageListCount" parameterType="java.util.HashMap" resultType="int">
+        SELECT count(1)
+        FROM T_QRTZ_TRIGGER_INFO t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="jobGroup gt 0">
+                AND t.job_group = #{jobGroup}
+            </if>
+            <if test="executorHandler != null and executorHandler != ''">
+                AND t.executor_handler like CONCAT(CONCAT('%', #{executorHandler}), '%')
+            </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="com.bestpay.ecurrency.operations.dal.model.XxlJobInfoDO">
+        <selectKey resultType="int" order="BEFORE" keyProperty="id">
+            SELECT SEQ_QRTZ_TRIGGER.nextval as id from dual
+        </selectKey>
+        INSERT INTO T_QRTZ_TRIGGER_INFO (
+        id,
+        job_group,
+        job_name,
+        job_cron,
+        job_desc,
+        add_time,
+        update_time,
+        author,
+        alarm_email,
+        executor_handler,
+        executor_param,
+        glue_switch,
+        glue_source,
+        glue_remark,
+        child_jobkey
+        ) VALUES (
+        #{id,jdbcType=DECIMAL},
+        #{jobGroup,jdbcType=DECIMAL},
+        #{jobName,jdbcType=VARCHAR},
+        #{jobCron,jdbcType=VARCHAR},
+        #{jobDesc,jdbcType=VARCHAR},
+        SYSDATE,
+        SYSDATE,
+        #{author,jdbcType=VARCHAR},
+        #{alarmEmail,jdbcType=VARCHAR},
+        #{executorHandler,jdbcType=VARCHAR},
+        #{executorParam,jdbcType=VARCHAR},
+        #{glueSwitch,jdbcType=VARCHAR},
+        #{glueSource,jdbcType=VARCHAR},
+        #{glueRemark,jdbcType=VARCHAR},
+        #{childJobKey,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="load" parameterType="java.util.HashMap" resultMap="XxlJobInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM T_QRTZ_TRIGGER_INFO t
+        WHERE t.job_group = #{jobGroup}
+        AND t.job_name = #{jobName}
+    </select>
+
+    <update id="update" parameterType="com.bestpay.ecurrency.operations.dal.model.XxlJobInfoDO">
+		UPDATE T_QRTZ_TRIGGER_INFO
+		SET 
+			job_cron = #{jobCron,jdbcType=VARCHAR},
+			job_desc = #{jobDesc,jdbcType=VARCHAR},
+			update_time = SYSDATE,
+			author = #{author,jdbcType=VARCHAR},
+			alarm_email = #{alarmEmail,jdbcType=VARCHAR},
+			executor_handler = #{executorHandler,jdbcType=VARCHAR},
+			executor_param = #{executorParam,jdbcType=VARCHAR},
+			glue_switch = #{glueSwitch,jdbcType=VARCHAR},
+			glue_source = #{glueSource,jdbcType=VARCHAR},
+			glue_remark = #{glueRemark,jdbcType=VARCHAR},
+			child_jobkey = #{childJobKey,jdbcType=VARCHAR}
+		WHERE job_group = #{jobGroup,jdbcType=DECIMAL}
+			AND job_name = #{jobName,jdbcType=VARCHAR}
+	</update>
+
+    <delete id="delete" parameterType="java.util.HashMap">
+		DELETE
+		FROM
+			T_QRTZ_TRIGGER_INFO
+		WHERE
+			job_group = #{jobGroup}
+		AND job_name = #{jobName}
+	</delete>
+
+    <select id="getJobsByGroup" parameterType="java.util.HashMap" resultMap="XxlJobInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM T_QRTZ_TRIGGER_INFO t
+        WHERE t.job_group = #{jobGroup}
+    </select>
+
+</mapper>

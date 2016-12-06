@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestpay.ecurrency.operations.dal.mapper.IXxlJobRegistryMapper">
+
+    <resultMap id="XxlJobRegistry" type="com.bestpay.ecurrency.operations.dal.model.XxlJobRegistryDO">
+        <result column="id" property="id" jdbcType="DECIMAL"/>
+        <result column="registry_group" property="registryGroup" jdbcType="VARCHAR"/>
+        <result column="registry_key" property="registryKey" jdbcType="VARCHAR"/>
+        <result column="registry_value" property="registryValue" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		t.id,
+		t.registry_group,
+		t.registry_key,
+		t.registry_value,
+		t.update_time
+	</sql>
+
+    <delete id="removeDead" parameterType="java.lang.Integer">
+		DELETE FROM T_QRTZ_TRIGGER_REGISTRY
+		WHERE update_time <![CDATA[ < ]]> sysdate-#{timeout}/86400
+	</delete>
+
+    <select id="findAll" parameterType="java.lang.Integer" resultMap="XxlJobRegistry">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM T_QRTZ_TRIGGER_REGISTRY t
+        WHERE t.update_time <![CDATA[ > ]]> sysdate-#{timeout}/86400
+    </select>
+
+    <update id="registryUpdate" parameterType="java.util.Map">
+        UPDATE T_QRTZ_TRIGGER_REGISTRY
+        SET update_time = sysdate
+        WHERE registry_group = #{registryGroup}
+          AND registry_key = #{registryKey}
+          AND registry_value = #{registryValue}
+    </update>
+
+    <insert id="registrySave" parameterType="java.util.Map">
+        INSERT INTO T_QRTZ_TRIGGER_REGISTRY(
+            id,
+        	registry_group,
+        	registry_key ,
+        	registry_value,
+        	update_time
+        	)
+        VALUES(
+            SEQ_QRTZ_TRIGGER.nextval,
+            #{registryGroup},
+            #{registryKey},
+            #{registryValue},
+            sysdate)
+    </insert>
+
+</mapper>

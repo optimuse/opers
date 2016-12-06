@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestpay.ecurrency.operations.dal.mapper.EoSymDictMapper">
+  <resultMap id="BaseResultMap" type="com.bestpay.ecurrency.operations.dal.model.EoSymDictDO">
+    <id column="DICT_ID" jdbcType="VARCHAR" property="dictId" />
+    <id column="DICT_TYPEID" jdbcType="VARCHAR" property="dictTypeid" />
+    <result column="DICT_NAME" jdbcType="VARCHAR" property="dictName" />
+    <result column="STAT" jdbcType="CHAR" property="stat" />
+    <result column="DICT_DESC" jdbcType="VARCHAR" property="dictDesc" />
+    <result column="SHOW_SEQ" jdbcType="DECIMAL" property="showSeq" />
+    <result column="IS_DEFAULT" jdbcType="VARCHAR" property="isDefault" />
+    <result column="CAN_MODIFY" jdbcType="VARCHAR" property="canModify" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    DICT_ID, DICT_TYPEID, DICT_NAME, STAT, DICT_DESC, SHOW_SEQ, IS_DEFAULT, CAN_MODIFY
+  </sql>
+  <select id="selectByExample" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EO_SYM_DICT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDOKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_EO_SYM_DICT
+    where DICT_ID = #{dictId,jdbcType=VARCHAR}
+      and DICT_TYPEID = #{dictTypeid,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDO">
+    insert into T_EO_SYM_DICT (DICT_ID, DICT_TYPEID, DICT_NAME, 
+      STAT, DICT_DESC, SHOW_SEQ, 
+      IS_DEFAULT, CAN_MODIFY)
+    values (#{dictId,jdbcType=VARCHAR}, #{dictTypeid,jdbcType=VARCHAR}, #{dictName,jdbcType=VARCHAR}, 
+      #{stat,jdbcType=CHAR}, #{dictDesc,jdbcType=VARCHAR}, #{showSeq,jdbcType=DECIMAL}, 
+      #{isDefault,jdbcType=VARCHAR}, #{canModify,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDO">
+    insert into T_EO_SYM_DICT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dictId != null">
+        DICT_ID,
+      </if>
+      <if test="dictTypeid != null">
+        DICT_TYPEID,
+      </if>
+      <if test="dictName != null">
+        DICT_NAME,
+      </if>
+      <if test="stat != null">
+        STAT,
+      </if>
+      <if test="dictDesc != null">
+        DICT_DESC,
+      </if>
+      <if test="showSeq != null">
+        SHOW_SEQ,
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT,
+      </if>
+      <if test="canModify != null">
+        CAN_MODIFY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dictId != null">
+        #{dictId,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeid != null">
+        #{dictTypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=CHAR},
+      </if>
+      <if test="dictDesc != null">
+        #{dictDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="showSeq != null">
+        #{showSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="canModify != null">
+        #{canModify,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDOExample" resultType="java.lang.Long">
+    select count(*) from T_EO_SYM_DICT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_EO_SYM_DICT
+    <set>
+      <if test="record.dictId != null">
+        DICT_ID = #{record.dictId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictTypeid != null">
+        DICT_TYPEID = #{record.dictTypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictName != null">
+        DICT_NAME = #{record.dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stat != null">
+        STAT = #{record.stat,jdbcType=CHAR},
+      </if>
+      <if test="record.dictDesc != null">
+        DICT_DESC = #{record.dictDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showSeq != null">
+        SHOW_SEQ = #{record.showSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isDefault != null">
+        IS_DEFAULT = #{record.isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="record.canModify != null">
+        CAN_MODIFY = #{record.canModify,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_EO_SYM_DICT
+    set DICT_ID = #{record.dictId,jdbcType=VARCHAR},
+      DICT_TYPEID = #{record.dictTypeid,jdbcType=VARCHAR},
+      DICT_NAME = #{record.dictName,jdbcType=VARCHAR},
+      STAT = #{record.stat,jdbcType=CHAR},
+      DICT_DESC = #{record.dictDesc,jdbcType=VARCHAR},
+      SHOW_SEQ = #{record.showSeq,jdbcType=DECIMAL},
+      IS_DEFAULT = #{record.isDefault,jdbcType=VARCHAR},
+      CAN_MODIFY = #{record.canModify,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDO">
+    update T_EO_SYM_DICT
+    <set>
+      <if test="dictName != null">
+        DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="stat != null">
+        STAT = #{stat,jdbcType=CHAR},
+      </if>
+      <if test="dictDesc != null">
+        DICT_DESC = #{dictDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="showSeq != null">
+        SHOW_SEQ = #{showSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="canModify != null">
+        CAN_MODIFY = #{canModify,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DICT_ID = #{dictId,jdbcType=VARCHAR}
+      and DICT_TYPEID = #{dictTypeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bestpay.ecurrency.operations.dal.model.EoSymDictDO">
+    update T_EO_SYM_DICT
+    set DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      STAT = #{stat,jdbcType=CHAR},
+      DICT_DESC = #{dictDesc,jdbcType=VARCHAR},
+      SHOW_SEQ = #{showSeq,jdbcType=DECIMAL},
+      IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      CAN_MODIFY = #{canModify,jdbcType=VARCHAR}
+    where DICT_ID = #{dictId,jdbcType=VARCHAR}
+      and DICT_TYPEID = #{dictTypeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

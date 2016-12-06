@@ -1,0 +1,571 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bestpay.ecurrency</groupId>
+    <artifactId>ecurrency-operations</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    <name>Parent</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <runtime.version>1.8</runtime.version>
+        <maven-compiler.version>3.1</maven-compiler.version>
+        <org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+        <org.mybatis.version>3.2.1</org.mybatis.version>
+        <org.mybatis.spring.version>1.2.0</org.mybatis.spring.version>
+        <dubbo.version>2.5.3</dubbo.version>
+        <commons.dbcp.version>1.4</commons.dbcp.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <kafka.version>0.8.1.1</kafka.version>
+        <bestpay.kafka.version>0.2.1</bestpay.kafka.version>
+        <logback.version>1.1.1</logback.version>
+        <bestpaycommon.version>1.0.1</bestpaycommon.version>
+        <oval.version>1.81</oval.version>
+        <lombok.version>1.16.8</lombok.version>
+        <bestpay-logback.version>1.3.1</bestpay-logback.version>
+        <autoconfig.plugin.version>1.2</autoconfig.plugin.version>
+        <junit.version>4.11</junit.version>
+        <ojdbc.version>11.2.0.2.0</ojdbc.version>
+        <spring-data-redis.version>1.4.0.RELEASE</spring-data-redis.version>
+        <redis.version>2.6.0</redis.version>
+        <cglib.version>2.2.2</cglib.version>
+        <guava.version>15.0</guava.version>
+        <commons-collections4.version>4.0</commons-collections4.version>
+        <patchca.version>0.5.0</patchca.version>
+        <commons.beanutils.version>1.9.2</commons.beanutils.version>
+        <quartz.version>2.2.3</quartz.version>
+        <javax.mail.version>1.4.6</javax.mail.version>
+        <jetty.version>8.1.19.v20160209</jetty.version>
+        <!--AOP支持注解-->
+        <aspectj.version>1.8.6</aspectj.version>
+        <jsp-api.version>2.0</jsp-api.version>
+        <ehcache.version>2.10.0</ehcache.version>
+        <hibernate.validator.version>5.3.1.Final</hibernate.validator.version>
+        <freemarker.version>2.3.20</freemarker.version>
+        <jackson.version>2.5.0</jackson.version>
+        <mysql.version>5.1.29</mysql.version>
+        <mybatis-paginator.version>4.1.6</mybatis-paginator.version>
+        <!--定时任务-->
+        <ecurrency-schedule.version>1.0.0-SNAPSHOT</ecurrency-schedule.version>
+    </properties>
+
+    <modules>
+        <module>ecurrency-operations-web</module>
+        <module>ecurrency-operations-api</module>
+        <module>ecurrency-operations-service</module>
+        <module>ecurrency-operations-dal</module>
+        <module>ecurrency-operations-manager</module>
+        <module>ecurrency-operations-biz</module>
+        <module>ecurrency-operations-common</module>
+    </modules>
+    <dependencies>
+        <!--servlet session-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ecurrency-operations-dal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ecurrency-operations-manager</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+			  <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ecurrency-operations-biz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+			   <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ecurrency-operations-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ecurrency-operations-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ecurrency-operations-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <!-- spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${org.springframework.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${org.springframework.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${org.springframework.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${org.springframework.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-data-redis</artifactId>
+                <version>1.2.2.RELEASE</version>
+            </dependency>
+            <!-- mybatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${org.mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${org.mybatis.spring.version}</version>
+            </dependency>
+
+            <!-- dbcp -->
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons.dbcp.version}</version>
+            </dependency>
+
+            <!-- google-guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <!-- alibaba dubbo -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.github.sgroschupf</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>0.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- slf4j -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <!-- log -->
+            <dependency>
+                <groupId>com.bestpay</groupId>
+                <artifactId>bestpay-logback</artifactId>
+                <version>${bestpay-logback.version}</version>
+            </dependency>
+
+            <!-- kafka -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka_2.10</artifactId>
+                <version>${kafka.version}</version>
+            </dependency>
+
+            <!-- bestpay-kafka -->
+            <dependency>
+                <groupId>com.bestpay.kafka</groupId>
+                <artifactId>kafka-service</artifactId>
+                <version>${bestpay.kafka.version}</version>
+            </dependency>
+
+            <!--  validate -->
+            <dependency>
+                <groupId>net.sf.oval</groupId>
+                <artifactId>oval</artifactId>
+                <version>${oval.version}</version>
+            </dependency>
+
+            <!-- hibernate-validator -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.validator.version}</version>
+            </dependency>
+
+
+
+            <!--  lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${org.springframework.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- ojdbc6 -->
+            <dependency>
+                <groupId>ojdbc6</groupId>
+                <artifactId>ojdbc6</artifactId>
+                <version>${ojdbc.version}</version>
+            </dependency>
+
+            <!-- cglib -->
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+
+            <!-- redis -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring-data-redis.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
+
+            <!-- bestpay-comcons-->
+            <dependency>
+                <groupId>com.bestpay</groupId>
+                <artifactId>commons</artifactId>
+                <version>${bestpaycommon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.patchca</groupId>
+                <artifactId>patchca</artifactId>
+                <version>${patchca.version}</version>
+            </dependency>
+
+            <!--AOP 注解支持 aspectj-->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <!--jstl-->
+            <dependency>
+                <groupId>jstl</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>taglibs</groupId>
+                <artifactId>standard</artifactId>
+                <version>1.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!--ehcache-->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <!--freemarker-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <!--json如果不引用ajax会406-->
+            <!-- For JSON -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!-- mysql驱动包 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!--mybatis分页插件-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${mybatis-paginator.version}</version>
+            </dependency>
+
+            <!--schedule-->
+            <dependency>
+                <groupId>com.bestpay.ecurrency</groupId>
+                <artifactId>ecurrency-schedule-core</artifactId>
+                <version>${ecurrency-schedule.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bestpay.ecurrency</groupId>
+                <artifactId>ecurrency-schedule-dal</artifactId>
+                <version>${ecurrency-schedule.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons.beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${javax.mail.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-jmx</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <build>
+        <finalName>ecurreccy-operations</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+                <configuration>
+                    <source>${runtime.version}</source>
+                    <target>${runtime.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <includes>
+                        <include>**/Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/TestCase.java</exclude>
+                    </excludes>
+                    <skip>false</skip>
+                    <testFailureIgnore>false</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.14.v20131031</version>
+                <configuration>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <stopPort>9966</stopPort>
+                    <stopKey>foo</stopKey>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>7777</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-archetype-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+            <!-- 上传源码 -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+</project>

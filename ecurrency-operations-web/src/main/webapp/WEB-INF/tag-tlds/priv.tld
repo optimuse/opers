@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+  "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>Privilege Tag Library</shortname>
+	<uri>/optionstag</uri>
+	<info>
+		@date 2009-02-15
+		@author lyz
+	
+		1.priv:valid
+	</info>
+	
+	<!-- valid -->
+	<tag>
+		<name>valid</name>
+		<tagclass>com.bestpay.ecurrency.operations.web.tag.PrivValidTag</tagclass>
+		<bodycontent>jsp</bodycontent>
+		<info>
+			功能：验证权限输出内容&lt;br&gt;
+			&lt;br&gt;
+			[验证权限]&lt;br&gt;
+			privUrl 权限URL，必填*&lt;br&gt;
+		</info>
+		<attribute>
+			<name>privUrl</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+</taglib>
+

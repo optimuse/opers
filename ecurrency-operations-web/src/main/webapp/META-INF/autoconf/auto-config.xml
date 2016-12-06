@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+    <!-- 连接池配置 -->
+    <group name="pcpf">
+        <property name="jdbc.pcpf.jdbcUrl" defaultValue="jdbc:oracle:thin:@116.228.151.160:11523:yfkcsdb"/>
+        <property name="jdbc.pcpf.jdbcUsername" defaultValue="yfk_ztest"/>
+        <property name="jdbc.pcpf.jdbcPassword" defaultValue="yfk_ztest"/>
+        <property name="jdbc.pcpf.driverClassName" defaultValue="oracle.jdbc.driver.OracleDriver" />
+    </group>
+
+    <group name="tyvc">
+        <property name="jdbc.tyvc.jdbcUrl" defaultValue="jdbc:oracle:thin:@116.228.151.160:11523:yfkcsdb"/>
+        <property name="jdbc.tyvc.jdbcUsername" defaultValue="YFK_VC_ZTEST"/>
+        <property name="jdbc.tyvc.jdbcPassword" defaultValue="YFK_VC_ZTEST"/>
+        <property name="jdbc.tyvc.driverClassName" defaultValue="oracle.jdbc.driver.OracleDriver" />
+        <property name="jdbc.initialSize" defaultValue="20" />
+        <property name="jdbc.minIdle" defaultValue="10" />
+        <property name="jdbc.maxIdle" defaultValue="200" />
+        <property name="jdbc.maxActive" defaultValue="200" />
+        <property name="jdbc.maxWait" defaultValue="1000" />
+        <property name="jdbc.testOnBorrow" defaultValue="false" />
+        <property name="jdbc.testWhileIdle" defaultValue="true" />
+        <property name="jdbc.timeBetweenEvictionRunsMillis" defaultValue="10000" />
+        <property name="jdbc.numTestsPerEvictionRun" defaultValue="3" />
+        <property name="jdbc.minEvictableIdleTimeMillis" defaultValue="300000" />
+    </group>
+
+    <!-- LogBack -->
+    <group name="logback">
+        <property name="logger.logLevel" defaultValue="debug"/>
+        <property name="logger.logback.logpath" defaultValue="/data/appLogs"/>
+        <property name="logger.ref" defaultValue="logfile"/>
+    </group>
+
+    <!-- redis -->
+    <group name="redis">
+        <property name="redis.mode" defaultValue="sentinels"/>
+        <property name="redis.host" defaultValue="172.17.162.242,172.17.162.243"/>
+        <property name="redis.port" defaultValue="26379,26379"/>
+        <property name="redis.password" defaultValue="nopassword"/>
+        <property name="redis.master" defaultValue="mymaster"/>
+        <property name="redis.minIdle" defaultValue="5"/>
+        <property name="redis.maxIdle" defaultValue="10"/>
+        <property name="redis.maxTotal" defaultValue="50"/>
+        <property name="redis.testOnBorrow" defaultValue="true"/>
+    </group>
+
+    <!-- AutoConfig替换模版配置 -->
+    <script>
+        <generate template="operations.properties.vm" destfile="WEB-INF/classes/properties/operations.properties" charset="UTF-8"/>
+    </script>
+
+</config>
+

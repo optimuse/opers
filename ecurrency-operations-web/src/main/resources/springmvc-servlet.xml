@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- scan the package and the sub package -->
+    <context:component-scan base-package="com.bestpay.ecurrency.operations.web.controller"/>
+
+    <!-- don't handle the static resource -->
+    <mvc:default-servlet-handler/>
+
+    <!-- if you use annotation you must configure following setting -->
+    <mvc:annotation-driven validator="validator"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 这里配置将使用上面国际化配置的messageSource -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath*:ValidationMessages_zh_CN.properties</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <!-- SpringMVC对模型视图添加前后缀 -->
+    <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/jsp/"   p:suffix=".jsp"/>
+
+    <!--FREEMARKER视图解释器 -->
+    <bean id="viewResolverFtl"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
+          p:suffix=".ftl" p:contentType="text/html;charset=UTF-8" p:order="0" p:cache="false"/>
+
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPaths">
+            <list>
+                <value>/WEB-INF/template/</value>
+                <value>/</value>
+            </list>
+        </property>
+        <property name="freemarkerSettings">
+            <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                <property name="location" value="classpath:properties/freemarker.properties" />
+            </bean>
+        </property>
+    </bean>
+
+    <!--使用<mvc:interceptors>配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!-- 需排除拦截的地址 -->
+            <mvc:exclude-mapping path="/login.do"/>
+            <mvc:exclude-mapping path="/toLogin.do"/>
+            <mvc:exclude-mapping path="/jcaptcha.do"/>
+            <mvc:exclude-mapping path="/sendSmsValidate.do"/>
+            <mvc:exclude-mapping path="/healthcheck.html"/>
+
+            <bean id="loginInterceptor" class="com.bestpay.ecurrency.operations.web.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+
+    <!-- 避免IE在ajax请求时，返回json出现下载 -->
+    <bean id="jacksonMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--json-->
+    <mvc:annotation-driven
+            content-negotiation-manager="contentNegotiationManager"/>
+
+    <bean id="contentNegotiationManager"
+          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"
+          p:favorParameter="false">
+    </bean>
+
+    <!--异常处理类-->
+    <bean id="exceptionResolver" class="com.bestpay.ecurrency.operations.web.resolver.WebExceptionResolver"/>
+
+</beans>
